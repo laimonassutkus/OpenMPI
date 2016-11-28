@@ -86,7 +86,7 @@ void sendCommand(Message _msg)
 
     // to send only one message we could make a rule that tells no matter what
     // the length of the message is e.g. 1kB
-    MPI_Send(&size_of_message, sizeof(int), MPI_INT, 1, 0, MPI_COMM_WORLD);
+    MPI_Send(&size_of_message, 1, MPI_INT, 1, 0, MPI_COMM_WORLD);
     MPI_Send(charifiedObject, size_of_message, MPI_BYTE, 1, 0, MPI_COMM_WORLD);
 }
 
@@ -100,7 +100,7 @@ char *charificationCommand(int &_size_of_message, Message &_message)
 
 void listener(int &_size_of_message, char *_charifiedObject, Message *_message)
 {
-    MPI_Recv(&_size_of_message, sizeof(int), MPI_INT, MPI_ANY_SOURCE, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+    MPI_Recv(&_size_of_message, 1, MPI_INT, MPI_ANY_SOURCE, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     _charifiedObject = (char *)malloc(_size_of_message);
 
     MPI_Recv(_charifiedObject, _size_of_message, MPI_BYTE, MPI_ANY_SOURCE, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
